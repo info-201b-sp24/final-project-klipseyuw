@@ -6,12 +6,8 @@ Authors: Kenta Lipsey
 
 For the Final Project -- Data Wrangling, add the following to this code repository:
 
-* An R script file containing the code you used to create your unified dataset 
-* Your unified and cleaned CSV dataset file
-* Data Nutrition Label (pdf) 
-
-
-**Link: Link to your Shiny App here**
+https://klipseyuw.shinyapps.io/final-project-klipseyuw/ 
+https://www.seattle.gov/police/information-and-data/data/public-data-sets
 
 Please create the necessary files for your multi-page Shiny app in this GitHub repository. Consult the Canvas assignment for more details. Be sure to publish your app on Shinyapps.io.
 

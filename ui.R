@@ -94,7 +94,9 @@ ui <- fluidPage(
     tabPanel("Crime by Location",
              sidebarLayout(
                sidebarPanel(
-                 p("This chart displays the amount of offenses per location/district in Seattle."),
+                 p(
+                   "This chart displays the amount of offenses per location/district in Seattle."
+                 ),
                  uiOutput("overall")
                ),
                mainPanel(plotlyOutput("location_chart"))
@@ -123,15 +125,19 @@ ui <- fluidPage(
     tabPanel("Crime Categories",
              sidebarLayout(
                sidebarPanel(
-                 p("This chart displays the crime rate data sorted by crime categories."),
+                 p(
+                   "This chart displays the crime rate data sorted by crime categories."
+                 ),
                  uiOutput("overall")
                ),
                
-               mainPanel(plotlyOutput("Crime Categories"))
+               mainPanel(plotlyOutput("offense_year"))
              )),
-    tabPanel("Summary Information",
-             p("A summary of of all data available."),
-             verbatimTextOutput("summary")),
+    tabPanel(
+      "Summary Information",
+      p("A summary of of all data available."),
+      verbatimTextOutput("summary")
+    ),
     tabPanel(
       "Table",
       tableOutput("summary_table"),

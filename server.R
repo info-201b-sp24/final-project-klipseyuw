@@ -29,7 +29,7 @@ summary_table <- crime_data %>%
               values_fill = 0) %>%
   mutate(count = rowSums(across(where(is.numeric)))) %>%
   select(Year, count, everything()) %>%
-  rename_all(~ gsub("\\.", " ", .)) %>%
+  rename_all( ~ gsub("\\.", " ", .)) %>%
   select(Year, count, everything()) %>%
   select(1:2, order(colnames(.)))
 
@@ -181,12 +181,17 @@ server <- function(input, output) {
   
   
   output$overall <- renderUI({
-    selectInput("type_of_offense", "Select Offense", 
-                choices = c("All", unique(crime_data$offense)), selected = "All")
+    selectInput(
+      "type_of_offense",
+      "Select Offense",
+      choices = c("All", unique(crime_data$offense)),
+      selected = "All"
+    )
   })
   
   filtered_data <- reactive({
-    if (is.null(input$type_of_offense) || input$type_of_offense == "All") {
+    if (is.null(input$type_of_offense) ||
+        input$type_of_offense == "All") {
       return(crime_data)
     } else {
       return(crime_data %>%
@@ -194,34 +199,44 @@ server <- function(input, output) {
     }
   })
   
-  output$chart2 <- renderPlotly({
-    data <- filtered_data()  # Access the reactive filtered data
+  output$offense_year <- renderPlotly({
+    data <- filtered_data()
     
     crimes_per_year <- data %>%
-      mutate(year = year(offense_start_datetime, label = TRUE)) %>%
+      mutate(year = year(offense_start_datetime)) %>%
       group_by(year) %>%
       summarise(num_crimes = n()) %>%
       na.omit()
     
     
     reported_crimes_per_year <- data %>%
-      mutate(year = year(report_datetime, label = TRUE)) %>%
+      mutate(year = year(report_datetime)) %>%
       group_by(year) %>%
       summarise(num_reported_crimes = n()) %>%
       na.omit()
     
-    combine <- left_join(crimes_per_year, reported_crimes_per_year, by = "year")
+    combine <-
+      left_join(crimes_per_year, reported_crimes_per_year, by = "year")
     
-    fig <- plot_ly(combine, x = ~year, y = ~num_crimes, name = 'Committed Crimes', type = 'scatter', mode = 'lines+markers') 
-    fig <- fig %>% add_trace(y = ~num_reported_crimes, name = 'Reported Crimes', mode = 'lines+markers')
+    fig <-
+      plot_ly(
+        combine,
+        x = ~ year,
+        y = ~ num_crimes,
+        name = "Offenses",
+        type = 'scatter',
+        mode = 'lines+markers'
+      )
+    fig <-
+      fig %>% add_trace(y = ~ num_reported_crimes,
+                        name = "Reported Offenses",
+                        mode = 'lines+markers')
     fig <- fig %>%
       layout(
         title = "",
         xaxis = list(title = "Year"),
-        yaxis = list(
-          title = "",
-          tickformat = ",d"  
-        ),
+        yaxis = list(title = "Offenses and Reported Offenses per Year",
+                     tickformat = ",d"),
         hovermode = "x unified"
       )
     

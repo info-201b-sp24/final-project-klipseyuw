@@ -126,7 +126,7 @@ ui <- fluidPage(
              sidebarLayout(
                sidebarPanel(
                  p(
-                   "This chart displays the crime rate data sorted by crime categories."
+                   "This chart displays the crime occurrence and reports sorted by the year that they occured."
                  ),
                  uiOutput("overall")
                ),

@@ -91,18 +91,19 @@ ui <- fluidPage(
       )),
     ),
     
-    tabPanel("Crime by Location",
+    tabPanel("Location by Crime",
              sidebarLayout(
                sidebarPanel(
-                 p(
-                   "This chart displays the amount of offenses per location/district in Seattle."
-                 ),
-                 uiOutput("overall")
+                 sliderInput("top_values", "Select the number of locations to display the crime rate of (sorted by highest to lowest):",
+                             min = 2, max = 59, value = 10)
                ),
-               mainPanel(plotlyOutput("location_chart"))
-             )),
+               mainPanel(
+                 plotOutput("bar_plot")
+               )
+             )
+    ),
     
-    tabPanel("Beat Map",
+    tabPanel("Crime Beat Map",
              sidebarLayout(
                sidebarPanel(
                  p(

@@ -9,8 +9,7 @@ library(grid)
 library(ggplot2)
 library(lubridate)
 
-crime_data <-
-  read.socrata("https://data.seattle.gov/resource/tazs-3rd5.csv")
+crime_data <-  read.socrata("https://data.seattle.gov/resource/tazs-3rd5.csv")
 
 crime_data$offense_start_datetime <-
   as.Date(as.POSIXct(crime_data$offense_start_datetime), "%m/%d/%Y")
@@ -126,6 +125,32 @@ server <- function(input, output) {
     cat("Year Highest Reported Crimes: ")
     cat(year_most_crime_reported$Year, "\n")
   })
+  
+  
+  location_table <- reactive({
+    crime_data %>%
+      filter(mcpp != "") %>%   
+      filter(mcpp != "<Null>") %>%          
+      filter(mcpp != "NULL") %>%   
+      filter(mcpp != "UNKNOWN") %>%   
+      group_by(mcpp) %>%    
+      summarize(count = n())
+  })
+  
+  
+  output$bar_plot <- renderPlot({
+    ggplot(location_table(), aes(x = reorder(mcpp, -count), y = count)) +
+      geom_bar(stat = "identity", fill = "darkred") +
+      xlab("Location") +
+      ylab("Number of Offenses") +
+      ggtitle("Number of Crimes Committted in Seattle By Location") +
+      theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5)) 
+  })
+  
+  
+  
+  
+  
   
   map_plot <- reactive({
     years <- input$years

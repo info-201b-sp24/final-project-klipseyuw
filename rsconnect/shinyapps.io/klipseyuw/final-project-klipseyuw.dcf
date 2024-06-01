@@ -5,7 +5,7 @@ account: klipseyuw
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 12094800
-bundleId: 8678205
+bundleId: 8686700
 url: https://klipseyuw.shinyapps.io/final-project-klipseyuw/
 version: 1
 asMultiple: FALSE

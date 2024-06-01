@@ -1,5 +1,6 @@
 library("RSocrata")
 library(shiny)
+library(shinyjs)
 library(dplyr)
 library(tidyr)
 library(sf)
